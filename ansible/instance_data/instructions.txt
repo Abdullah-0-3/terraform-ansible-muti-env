@@ -1,0 +1,49 @@
+INSTANCE DATA SCRIPT INSTRUCTIONS
+
+Purpose:
+This script generates Ansible inventory files from EC2 instances with specific environment tags.
+
+How to use:
+Run with environment parameter: python instance_data.py <environment>
+Example: python instance_data.py dev
+
+Function Descriptions:
+- parse_arguments: 
+  Checks for environment parameter and provides usage help if missing.
+
+- initialize_ec2_client: 
+  Creates AWS EC2 client with specified region.
+
+- get_instance_data: 
+  Retrieves running EC2 instances filtered by environment tag.
+
+- build_inventory_content: 
+  Formats instance information into Ansible inventory structure.
+
+- get_inventory_file_path: 
+  Determines the inventory file location and creates directories if needed.
+
+- write_inventory_file: 
+  Writes the inventory content to the destination file.
+
+- get_ssh_key_path: 
+  Calculates the relative path to the SSH key file.
+
+- main: 
+  Orchestrates the entire process from arguments to file creation.
+
+Command-line Usage:
+Required parameter: environment name (dev, stg, prd)
+Example: python instance_data.py dev
+
+Output:
+An inventory file will be created in the ansible/inventory directory.
+No console output is produced on success.
+
+Inventory Format:
+[environment-servers]
+server1 ansible_host=1.2.3.4 ansible_user=ubuntu
+
+[environment-servers:vars]
+ansible_ssh_private_key_file=/path/to/key
+ansible_python_interpreter=/usr/bin/python3
