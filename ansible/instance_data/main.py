@@ -29,13 +29,13 @@ def get_instance_data(ec2_client, environment):
     ]
 
 def build_inventory_content(environment, instance_ips, ssh_key_path, python_interpreter):
-    inventory_lines = [f"[{environment}-servers]"]
+    inventory_lines = ["[servers]"]
     
     for i, instance in enumerate(instance_ips, 1):
         inventory_lines.append(f"server{i} ansible_host={instance['public_ip']} ansible_user=ubuntu")
     
     inventory_lines.extend([
-        f"\n[{environment}-servers:vars]",
+        "\n[servers:vars]",
         f"ansible_ssh_private_key_file={ssh_key_path}",
         f"ansible_python_interpreter={python_interpreter}"
     ])
