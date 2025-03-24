@@ -27,5 +27,5 @@ variable "vpc_security_group_ids" {
 variable "environment" {
   description = "Environment tag value"
   type        = string
-  default     = "dev"
+  default     = "global"
 }

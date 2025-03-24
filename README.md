@@ -5,7 +5,7 @@ This project helps you automatically set up infrastructure in AWS for different 
 ## What This Project Does
 
 - Creates EC2 instances in AWS with different sizes based on environment
-- Sets up an Ansible master server to manage all other servers
+- Sets up a single Ansible master server to manage all environments
 - Automatically generates inventory files for Ansible based on created instances
 - Supports separate configurations for dev, staging, and production environments
 

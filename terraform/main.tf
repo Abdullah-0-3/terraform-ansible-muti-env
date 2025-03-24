@@ -9,7 +9,26 @@ data "aws_vpc" "default" {
 
 resource "aws_security_group" "multi-env-security-group" {
   vpc_id = data.aws_vpc.default.id
-  name   = "multi-env-security-group"
+  name   = "${local.env}-multi-env-security-group"
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "ansible_master_sg" {
+  vpc_id = data.aws_vpc.default.id
+  name   = "ansible-master-security-group"
 
   ingress {
     from_port   = 22
@@ -74,7 +93,8 @@ module "ansible_master" {
   ami_id                 = data.aws_ami.ubuntu.id
   instance_type          = local.instance_type_b
   key_name               = aws_key_pair.multi-env-keypair.key_name
-  vpc_security_group_ids = [aws_security_group.multi-env-security-group.id]
+  vpc_security_group_ids = [aws_security_group.ansible_master_sg.id]
+  environment            = "global"  # Fixed environment tag that doesn't change
 }
 
 # Outputs for Ansible Master
