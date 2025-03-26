@@ -9,6 +9,10 @@ This project helps you automatically set up infrastructure in AWS for different 
 - Automatically generates inventory files for Ansible based on created instances
 - Supports separate configurations for dev, staging, and production environments
 
+## Project Architecture
+
+![Project Architecture](architecture.png)
+
 ## Project Structure
 
 ```
